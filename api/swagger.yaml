@@ -1,0 +1,102 @@
+---
+swagger: "2.0"
+info:
+  description: "API criada para realizar requisições de processo."
+  version: "1.0.0"
+  title: "Buscar Processos no Porto Digital"
+  termsOfService: "terms"
+  contact:
+    name: "Suporte SETIN"
+    url: "http://portal-suporte.tce.am.gov.br/suporte/?page_id=4501"
+    email: "setinatende@tce.am.gov.br"
+host: "localhost:8085"
+basePath: "/v1/suits"
+tags:
+- name: "Processo"
+- name: "BuscaSimples"
+schemes:
+- "http"
+- "https"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+security:
+- BasicAuth: []
+paths:
+  /'cadastro':
+    post:
+      tags:
+      - "Processo"
+      summary: "Cadastro de processo para teste"
+      description: "Cadastra um processo para teste."
+      operationId: "cadastraProcesso"
+      parameters:
+      - in: "body"
+        name: "processo"
+        required: false
+        schema:
+          $ref: "#/definitions/Processo"
+        x-exportParamName: "Processo"
+      responses:
+        "201":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Processo"
+        "400":
+          description: "Requisição Inválida"
+        "500":
+          description: "Erro interno no servidor"
+  /'consulta':
+    get:
+      tags:
+      - "BuscaSimples"
+      summary: "Busca Simples do Processo"
+      description: "Busca Simples através do número e ano."
+      operationId: "buscaSimples"
+      parameters: []
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Processo"
+securityDefinitions:
+  BasicAuth:
+    type: "basic"
+definitions:
+  Processo:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+      numero:
+        type: "integer"
+        format: "int64"
+        example: 10572
+      ano:
+        type: "integer"
+        format: "int64"
+        example: 2021
+      natureza:
+        type: "string"
+        example: "pensão"
+      especie:
+        type: "string"
+        example: "Por morte"
+      objeto:
+        type: "string"
+        example: "PENSÃO CONCEDIDA À SRA. ..."
+      numero_paginas:
+        type: "integer"
+        format: "int64"
+        example: 110
+    example:
+      especie: "Por morte"
+      ano: 2021
+      numero_paginas: 110
+      numero: 10572
+      objeto: "PENSÃO CONCEDIDA À SRA. ..."
+      id: 1
+      natureza: "pensão"
